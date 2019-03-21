@@ -9,7 +9,7 @@ Napi::Object MyObject::Init(Napi::Env env, Napi::Object exports) {
     Napi::HandleScope scope(env);
 
     Napi::Function func = DefineClass(env, "MyObject", {
-        InstanceMethod("jsToCppObject", &MyObject::JsToCppObject)
+        InstanceMethod("jsToCpp2DArray", &MyObject::JsToCpp2DArray)
     });
 
     constructor = Napi::Persistent(func);
@@ -25,16 +25,13 @@ MyObject::MyObject(const Napi::CallbackInfo& info) : Napi::ObjectWrap<MyObject>(
     cout<<"constructor call over"<<endl;
 }
 
-Napi::Value MyObject::JsToCppObject(const Napi::CallbackInfo& info) {
+Napi::Value MyObject::JsToCpp2DArray(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
-    if (info.Length() <= 0 || !info[0].IsObject()) {
-        Napi::TypeError::New(env, "Object expected").ThrowAsJavaScriptException();
+    if (info.Length() <= 0 || !info[0].IsArray()) {
+        Napi::TypeError::New(env, "array expected").ThrowAsJavaScriptException();
     }
-    Napi::Object obj = info[0].ToObject();
-    double amount = obj.Get(static_cast<napi_value>(Napi::String::New(info.Env(),"amount"))).As<Napi::Number>().DoubleValue();
-    cout<<"amount="<<amount<<endl;
-    
-    Napi::Array array = obj.Get(static_cast<napi_value>(Napi::String::New(info.Env(),"letters"))).As<Napi::Array>();
+
+    Napi::Array array = info[0].ToArray();
     uint32_t len = array.Length();
     cout<<"array length="<<len<<endl;
     for(uint32_t i=0;i<len;i++) {

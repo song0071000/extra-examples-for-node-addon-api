@@ -1,4 +1,3 @@
-# extra-examples-for-node-addon-api
 More examples for node-addon-api
 =========================================
 

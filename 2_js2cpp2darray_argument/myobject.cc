@@ -31,7 +31,7 @@ Napi::Value MyObject::JsToCpp2DArray(const Napi::CallbackInfo& info) {
         Napi::TypeError::New(env, "array expected").ThrowAsJavaScriptException();
     }
 
-    Napi::Array array = info[0].ToArray();
+    Napi::Array array = info[0].As<Napi::Array>();
     uint32_t len = array.Length();
     cout<<"array length="<<len<<endl;
     for(uint32_t i=0;i<len;i++) {

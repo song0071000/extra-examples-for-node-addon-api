@@ -8,4 +8,4 @@ More examples for node-addon-api
 - [2_js2cpp2darray_argument](2_js2cpp2darray_argument)
     A two-dimensional array was passed as cpp function. You can pass multidimensional array as you want references to this example.
 
-More example to be continue.
+More examples to be continue.
